@@ -28,4 +28,30 @@ public partial class FastBodyNodeSlot : ResoniteMod
         Config?.Save(true);
         harmony.PatchAll();
     }
+
+    [HarmonyPatch(typeof(BodyNodeSlot), "Compute")]
+    private class BodyNodePatch
+    {
+        private static bool Prefix(ref FrooxEngineContext context, BodyNodeSlot __instance, ref Slot __result)
+        {
+            // Run original method if the mod is disabled
+            if (!Config!.GetValue(enable)) return true;
+
+            // Recreation of the original compute method
+            User user;
+            if (__instance.Source.Source == null)
+            {
+                user = context.World.LocalUser;
+            }
+            else
+            {
+                user = ProtoFlux.Runtimes.Execution.ExecutionContextExtensions.ReadObject<User>(0, context);
+            }
+            BodyNode node = ProtoFlux.Runtimes.Execution.ExecutionContextExtensions.ReadValue<BodyNode>(1, context);
+            __result = user.GetBodyNodeSlot(node);
+
+            // Skip original method
+	        return false;
+        }
+    }
 }
