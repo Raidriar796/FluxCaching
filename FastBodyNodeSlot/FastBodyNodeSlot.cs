@@ -4,7 +4,6 @@ using FrooxEngine;
 using FrooxEngine.CommonAvatar;
 using FrooxEngine.ProtoFlux;
 using Elements.Core;
-using ProtoFlux.Core;
 using ProtoFlux.Runtimes.Execution.Nodes.FrooxEngine.Avatar;
 using Renderite.Shared;
 
@@ -18,7 +17,7 @@ public partial class FastBodyNodeSlot : ResoniteMod
 
     public override string Name => "FastBodyNodeSlot";
     public override string Author => "Raidriar796";
-    public override string Version => "1.0.0";
+    public override string Version => "0.1.0";
     public override string Link => "https://github.com/Raidriar796/FastBodyNodeSlot";
     private static ModConfiguration? Config;
 
