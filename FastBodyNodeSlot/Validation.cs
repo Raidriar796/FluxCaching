@@ -25,7 +25,7 @@ public partial class FastBodyNodeSlot : ResoniteMod
         // Creates a new CachedResults instance and adds it to the dictionary with the instance as the key
         if (!CachedBodyNodeSlots.ContainsKey(instance))
         {
-            cachedResults = new(user, node);
+            cachedResults = new(instance, user, node);
             CachedBodyNodeSlots.Add(instance, cachedResults);
         }
         // If the key already exists, simply reuse it
@@ -100,7 +100,7 @@ public partial class FastBodyNodeSlot : ResoniteMod
         // If at any point a cache invalidation or other update occured, run the usual logic to fetch the body node slot
         if (shouldUpdate == true)
         {
-            slot = CustomGetBodyNodeSlot(user, node);
+            slot = CustomGetBodyNodeSlot(instance, user, node);
             CachedBodyNodeSlots[instance].CachedSlot = slot;
         }
 

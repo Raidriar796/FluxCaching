@@ -1,9 +1,6 @@
 using ResoniteModLoader;
-using HarmonyLib;
 using FrooxEngine;
 using FrooxEngine.CommonAvatar;
-using FrooxEngine.ProtoFlux;
-using Elements.Core;
 using ProtoFlux.Runtimes.Execution.Nodes.FrooxEngine.Avatar;
 using Renderite.Shared;
 
@@ -11,9 +8,22 @@ namespace FastBodyNodeSlot;
 
 public partial class FastBodyNodeSlot : ResoniteMod
 {
-    private static Slot CustomGetBodyNodeSlot(User user, BodyNode node)
+    private static Slot CustomGetBodyNodeSlot(BodyNodeSlot instance, User user, BodyNode node)
     {
-        // Recreation of the original GetBodyNodeSlot method
+        CachedResults cachedResults;
+        BipedRig bipedRig = null!;
+
+        // Returns early if the dictionary does not have the BodyNodeSlot tracked yet
+        if (CachedBodyNodeSlots.ContainsKey(instance))
+        {
+            cachedResults = CachedBodyNodeSlots[instance];
+        }
+        else
+        {
+            return null!;
+        }
+
+        // Recreation of the original GetBodyNodeSlot method's null checking
         Slot slot;
 
 	      if (user == null)
@@ -38,8 +48,30 @@ public partial class FastBodyNodeSlot : ResoniteMod
 		        return null!;
 	      }
 
-        BipedRig componentInChildren = root.GetComponentInChildren<BipedRig>(null!, false, false);
-	      Slot bone = (componentInChildren != null) ? componentInChildren.TryGetBone(node) : null!;
+        // Stores for the first time the biped rig is searched to avoid searching again if it's null
+        if (!cachedResults.IsBipedRigSearched)
+        {
+            cachedResults.CachedBipedRig = root.GetComponentInChildren<BipedRig>();
+            bipedRig = cachedResults.CachedBipedRig;
+            CachedBodyNodeSlots[instance].CachedBipedRig = cachedResults.CachedBipedRig;
+            CachedBodyNodeSlots[instance].IsBipedRigSearched = true;
+        }
+        else if (cachedResults.CachedBipedRig == null)
+        {
+            bipedRig = null!;
+        }
+        else if (cachedResults.CachedBipedRig.IsDestroyed)
+        {
+            cachedResults.CachedBipedRig = root.GetComponentInChildren<BipedRig>();
+            bipedRig = cachedResults.CachedBipedRig;
+            CachedBodyNodeSlots[instance].CachedBipedRig = cachedResults.CachedBipedRig;
+        }
+        else
+        {
+            bipedRig = cachedResults.CachedBipedRig;
+        }
+
+	      Slot bone = (bipedRig != null) ? bipedRig.TryGetBone(node) : null!;
 
 	      if (bone != null)
 	      {
