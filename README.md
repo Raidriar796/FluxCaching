@@ -2,7 +2,7 @@
 
 A [ResoniteModLoader](https://github.com/resonite-modding-group/ResoniteModLoader) mod for [Resonite](https://resonite.com/) that adds caching to BodyNodeSlot ProtoFlux nodes for significantly faster querying. 
 
-BodyNodeSlot searches an entire user's hierarchy every update, even if the actual result is no different. This is reliable, but expensive. The goal here is to cache results and only search again if something changes. This effectively turns the node from an O(n) operation to an O(1) operation while nothing is changing. I've tried to match vanilla behavior as closely as possible but there may be some inconstencies. Performance gains depend on how BodyNodeSlot is used and the size of the hierarchies it searches, your mileage may vary.
+BodyNodeSlot searches for the BipedRig component, if there is no BipedRig it will try to find AvatarObjectSlot components instead. This is ran every time the node is requested to update, even if the actual result is no different. This is reliable, but expensive. The goal here is to cache results and only search again if something changes. This effectively turns the node from an O(n+m) operation to a nearly O(1) operation while nothing is changing. I've tried to match vanilla behavior as closely as possible but there may be some inconstencies. Performance gains depend on how BodyNodeSlot is used and the size of the hierarchies it searches, your mileage may vary.
 
 This mod tries to address concerns seen [in this discussion](<https://github.com/Yellow-Dog-Man/Resonite-Issues/discussions/3927>).
 
