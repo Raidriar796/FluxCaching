@@ -13,6 +13,14 @@ public partial class FluxCaching : ResoniteMod
         // Used to clear the slot cache when it becomes invalid
         private static void ClearCache(BodyNodeSlot instance)
         {
+            // SOME form of clearing no longer used entries in the main dictionary,
+            // hopefully this is replaced later, there's likely a better way to do this
+            foreach (BodyNodeSlot bodyNodeSlot in CachedBodyNodeSlots.Keys)
+            {
+                if (CachedBodyNodeSlots[bodyNodeSlot] == null)
+                   CachedBodyNodeSlots.Remove(bodyNodeSlot);
+            }
+
             CachedBodyNodeSlots.Remove(instance);
         }
 
