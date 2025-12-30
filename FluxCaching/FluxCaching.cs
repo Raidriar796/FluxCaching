@@ -5,10 +5,6 @@ namespace FluxCaching;
 
 public partial class FluxCaching : ResoniteMod
 {
-    [AutoRegisterConfigKey]
-    public static readonly ModConfigurationKey<bool> enable =
-        new("enable", "Enable FluxCaching", () => true);
-
     public override string Name => "FluxCaching";
     public override string Author => "Raidriar796";
     public override string Version => "0.2.0";

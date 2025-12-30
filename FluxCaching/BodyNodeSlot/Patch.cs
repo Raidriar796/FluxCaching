@@ -17,7 +17,7 @@ public partial class FluxCaching : ResoniteMod
             private static bool Prefix(ref FrooxEngineContext context, BodyNodeSlot __instance, ref Slot __result)
             {
                 // Run original method if the mod is disabled
-                if (!Config!.GetValue(enable)) return true;
+                if (!Config!.GetValue(enable) || !Config.GetValue(bodyNodeSlotCaching)) return true;
 
                 // Recreation of the original Compute method
                 User user;
