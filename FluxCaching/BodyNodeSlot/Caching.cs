@@ -25,6 +25,11 @@ public partial class FluxCaching : ResoniteMod
             public bool IsBipedRigSearched { get; set; } = false;
 
             public Dictionary<BodyNode, AvatarObjectSlot> SearchedAvatarObjectSlots { get; } = [];
+
+            public HashSet<AvatarObjectSlot> SubscribedAvatarObjectSlots { get; } = [];
+            public HashSet<Slot> SubscribedSlots { get; } = [];
+            public HashSet<BipedRig> SubscribedBipedRigs { get; } = [];
+            public HashSet<AvatarObjectSlot> SubscribedSearchedAvatarObjectSlots { get; } = [];
         }
 
         // Stores the instance of the BodyNodeSlot with it's cached results

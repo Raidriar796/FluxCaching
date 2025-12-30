@@ -14,7 +14,7 @@ public partial class FluxCaching : ResoniteMod
         {
             Cache cache;
             BipedRig bipedRig;
-            AvatarObjectSlot avatarObjectSlot = null!;
+            AvatarObjectSlot searchedAvatarObjectSlot = null!;
 
             // Returns early if the dictionary does not have the BodyNodeSlot tracked yet
             if (CachedBodyNodeSlots.ContainsKey(instance)) cache = CachedBodyNodeSlots[instance];
@@ -38,15 +38,9 @@ public partial class FluxCaching : ResoniteMod
                 CachedBodyNodeSlots[instance].CachedBipedRig = cache.CachedBipedRig;
                 CachedBodyNodeSlots[instance].IsBipedRigSearched = true;
 
-                if (cache.CachedBipedRig != null)
-                {
-                    CachedBodyNodeSlots[instance].CachedBipedRig.Destroyed += (b) =>
-                    {
-                        cache.CachedBipedRig = root.GetComponentInChildren<BipedRig>();
-                        bipedRig = cache.CachedBipedRig;
-                        CachedBodyNodeSlots[instance].CachedBipedRig = cache.CachedBipedRig;
-                    };
-                };
+                // Subscribe a newly cached BipedRig to clear the cache if it is destroyed
+                if (cache.CachedBipedRig != null && CachedBodyNodeSlots[instance].SubscribedBipedRigs.Add(cache.CachedBipedRig))
+                    CachedBodyNodeSlots[instance].CachedBipedRig.Destroyed += (b) => { ClearCache(instance); };
             }
             else if (cache.CachedBipedRig == null) bipedRig = null!;
             else bipedRig = cache.CachedBipedRig;
@@ -59,14 +53,15 @@ public partial class FluxCaching : ResoniteMod
             // cache it if it hasn't, reuse the cached results if it has.
             if (!cache.SearchedAvatarObjectSlots.ContainsKey(node))
             {
-                avatarObjectSlot = root.FindSlotForNodeInChildren(node);
-                CachedBodyNodeSlots[instance].SearchedAvatarObjectSlots.Add(node, avatarObjectSlot);
+                searchedAvatarObjectSlot = root.FindSlotForNodeInChildren(node);
+                CachedBodyNodeSlots[instance].SearchedAvatarObjectSlots.Add(node, searchedAvatarObjectSlot);
 
-                if (avatarObjectSlot != null) avatarObjectSlot.Destroyed += (a) => { ClearCache(instance); };
+                if (searchedAvatarObjectSlot != null && CachedBodyNodeSlots[instance].SubscribedSearchedAvatarObjectSlots.Add(searchedAvatarObjectSlot))
+                    searchedAvatarObjectSlot.Destroyed += (a) => { ClearCache(instance); };
             }
-            else avatarObjectSlot = cache.SearchedAvatarObjectSlots[node];
+            else searchedAvatarObjectSlot = cache.SearchedAvatarObjectSlots[node];
 
-	        if (avatarObjectSlot != null) return avatarObjectSlot.Slot;
+	        if (searchedAvatarObjectSlot != null) return searchedAvatarObjectSlot.Slot;
 
 	        return null!;
         }

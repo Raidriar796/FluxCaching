@@ -24,7 +24,8 @@ public partial class FluxCaching : ResoniteMod
             CachedBodyNodeSlots[instance].CachedSlot = slot;
             CachedBodyNodeSlots[instance].IsBodyNodeSearched = true;
 
-            if (slot != null)
+            // Subscribe the slot if it's the first time it has been cached
+            if (slot != null && CachedBodyNodeSlots[instance].SubscribedSlots.Add(slot))
             {
                 slot.Destroyed += (s) => { ClearCache(instance); };
                 slot.ParentChanged += (s) => { ClearCache(instance); };
@@ -94,8 +95,14 @@ public partial class FluxCaching : ResoniteMod
                 if (cache.CachedAvatarObjectSlot != null)
                 {
                     CachedBodyNodeSlots[instance].CachedAvatarObjectSlot = cache.CachedAvatarObjectSlot;
-                    CachedBodyNodeSlots[instance].CachedAvatarObjectSlot.Equipped.OnValueChange += (v) => { ClearCache(instance); };
-                    CachedBodyNodeSlots[instance].CachedAvatarObjectSlot.Destroyed += (v) => { ClearCache(instance); };
+
+                    // Prevents resubscribing previously cached AvatarObjectSlots
+                    if (CachedBodyNodeSlots[instance].SubscribedAvatarObjectSlots.Add(cache.CachedAvatarObjectSlot))
+                    {
+                        CachedBodyNodeSlots[instance].CachedAvatarObjectSlot.Equipped.OnValueChange += (v) => { ClearCache(instance); };
+                        CachedBodyNodeSlots[instance].CachedAvatarObjectSlot.Destroyed += (v) => { ClearCache(instance); };
+                    }
+
                     return GetSlotAndAssignEvents(instance, user, node);
                 }
             }
