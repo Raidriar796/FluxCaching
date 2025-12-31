@@ -32,24 +32,20 @@ public partial class FluxCaching : ResoniteMod
             CachedBodyNodeSlots[instance].CachedSlot = slot;
             CachedBodyNodeSlots[instance].IsBodyNodeSearched = true;
 
-            // Subscribe the slot if it's the first time it has been cached
-            if (slot != null && CachedBodyNodeSlots[instance].SubscribedSlots.Add(slot))
+            // Subscribe the found slot and all of it's parents up to the user root if they haven't been already
+            if (slot != null)
             {
-                slot.Destroyed += (s) => { ClearCache(instance); };
-                slot.ParentChanged += (s) => { ClearCache(instance); };
-                
-                // Get all parents and subscribe newly cached slots if they haven't been already
                 ICollection<Slot> parentCollection = [];
-                slot.GetAllParents(parentCollection, false);
-                foreach (Slot parent in parentCollection)
+                slot.GetAllParents(parentCollection, true);
+                foreach (Slot tempSlot in parentCollection)
                 {
-                    if (CachedBodyNodeSlots[instance].SubscribedSlots.Add(parent))
+                    if (CachedBodyNodeSlots[instance].SubscribedSlots.Add(tempSlot))
                     {
-                        parent.Destroyed += (s) => { ClearCache(instance); };
-                        parent.ParentChanged += (s) => { ClearCache(instance); };
+                        tempSlot.Destroyed += (s) => { ClearCache(instance); };
+                        tempSlot.ParentChanged += (s) => { ClearCache(instance); };
                     }
 
-                    if (parent == user.Root.Slot) break;
+                    if (tempSlot == user.Root.Slot) break;
                 }
             }
 
