@@ -21,7 +21,15 @@ public partial class FluxCaching : ResoniteMod
                    CachedBodyNodeSlots.Remove(bodyNodeSlot);
             }
 
-            CachedBodyNodeSlots.Remove(instance);
+            CachedBodyNodeSlots[instance].CachedUser = null!;
+            CachedBodyNodeSlots[instance].CachedSlot = null!;
+            CachedBodyNodeSlots[instance].CachedAvatarObjectSlot = null!;
+            CachedBodyNodeSlots[instance].CachedBipedRig = null!;
+
+            CachedBodyNodeSlots[instance].IsBodyNodeSearched = false;
+            CachedBodyNodeSlots[instance].IsBipedRigSearched = false;
+
+            CachedBodyNodeSlots[instance].SearchedAvatarObjectSlots.Clear();
         }
 
         // If at any point a cache invalidation or other update occured, run the usual logic to fetch the body node slot
