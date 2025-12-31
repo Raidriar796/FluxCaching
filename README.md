@@ -9,7 +9,9 @@ This mod tries to address concerns seen [in this discussion](<https://github.com
 ## Affected ProtoFlux Nodes
 
 - BodyNodeSlot
-  - Caching reduces this node from an at worst O(n+m) cost to a near O(1) cost.
+  - Reduced from an at worst O(n+m) to a near O(1) cost.
+- BodyNodeSlotInChildren
+  - Reduced from an at worst O(n+m) to a near O(1) cost.
 
 ## Requirements
 - [ResoniteModLoader](https://github.com/resonite-modding-group/ResoniteModLoader)
