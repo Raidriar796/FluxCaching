@@ -15,4 +15,8 @@ public partial class FluxCaching : ResoniteMod
     [AutoRegisterConfigKey]
     public static readonly ModConfigurationKey<bool> bodyNodeSlotInChildrenCaching =
         new("bodyNodeSlotInChildrenCaching", "BodyNodeSlotInChildren Caching", () => true);
+
+    [AutoRegisterConfigKey]
+    public static readonly ModConfigurationKey<bool> findChildByNameCaching =
+        new("findChildByNameCaching", "FindChildByName Caching", () => true);
 }
