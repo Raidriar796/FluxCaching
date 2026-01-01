@@ -30,7 +30,7 @@
       <HintPath>$(ResonitePath)rml_libs/0Harmony.dll</HintPath>
       <Private>false</Private>
     </Reference>
-    <Reference Include="FrooxEngine">
+    <Reference Include="FrooxEngine" Publicize="true">
       <HintPath>$(ResonitePath)FrooxEngine.dll</HintPath>
       <Private>false</Private>
     </Reference>
@@ -54,5 +54,6 @@
       <HintPath>$(ResonitePath)Renderite.Shared.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
   </ItemGroup>
 </Project>
