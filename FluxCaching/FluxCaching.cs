@@ -7,7 +7,7 @@ public partial class FluxCaching : ResoniteMod
 {
     public override string Name => "FluxCaching";
     public override string Author => "Raidriar796";
-    public override string Version => "0.4.0";
+    public override string Version => "0.5.0";
     public override string Link => "https://github.com/Raidriar796/FluxCaching";
     private static ModConfiguration? Config;
 
