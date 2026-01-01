@@ -21,7 +21,7 @@ public partial class FluxCaching : ResoniteMod
             public HashSet<Slot> SubscribedSlots { get; } = [];
         }
 
-        // Stores the instance of the BodyNodeSlot with it's cached results
+        // Stores the instance of the FindParentByName with it's cached results
         private static readonly Dictionary<FindParentByName, Cache> CachedFindParentByNames = [];
     }
 }

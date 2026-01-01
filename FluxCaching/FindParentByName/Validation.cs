@@ -36,6 +36,7 @@ public partial class FluxCaching : ResoniteMod
             Slot slot = targetSlot.FindParent(name, matchSubstring, ignoreCase, searchDepth);
             cache.CachedSlot = slot;
 
+            // This gets every parent and subscribes events to invalidate the cache
             ICollection<Slot> slotCollection = [];
             targetSlot.GetAllParents(slotCollection, true);
             foreach (Slot tempSlot in slotCollection)

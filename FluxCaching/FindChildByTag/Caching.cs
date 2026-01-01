@@ -19,7 +19,7 @@ public partial class FluxCaching : ResoniteMod
             public HashSet<Slot> SubscribedSlots { get; } = [];
         }
 
-        // Stores the instance of the BodyNodeSlot with it's cached results
+        // Stores the instance of the FindChildByTag with it's cached results
         private static readonly Dictionary<FindChildByTag, Cache> CachedFindChildByTags = [];
     }
 }
