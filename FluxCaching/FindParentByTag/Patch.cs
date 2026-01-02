@@ -13,7 +13,7 @@ public partial class FluxCaching : ResoniteMod
         [HarmonyPatch(typeof(FindParentByTag), "Compute")]
         private class FindParentByTagPatch
         {
-            private static bool Prefix(ref FrooxEngineContext context, FindParentByTag __instance, ref string __result)
+            private static bool Prefix(ref FrooxEngineContext context, FindParentByTag __instance, ref Slot __result)
             {
                 // Run original method if the mod is disabled
                 if (!Config!.GetValue(enable) || !Config.GetValue(findParentByTagCaching)) return true;

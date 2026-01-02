@@ -14,7 +14,7 @@ public partial class FluxCaching : ResoniteMod
             public Slot CachedTargetSlot { get; set; } = targetSlot;
             public string CachedTargetTag { get; set; } = targetTag;
             public int CachedSearchedDepth { get; set; } = searchDepth;
-            public string CachedTag { get; set; } = null!;
+            public Slot CachedSlot { get; set; } = null!;
 
             public HashSet<Slot> SubscribedSlots { get; } = [];
         }

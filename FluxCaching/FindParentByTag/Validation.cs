@@ -23,18 +23,18 @@ public partial class FluxCaching : ResoniteMod
 
             cache.CachedTargetSlot = null!;
             cache.CachedTargetTag = null!;
-            cache.CachedTag = null!;
+            cache.CachedSlot = null!;
         }
 
         // If at any point a cache invalidation or other update occured, run the usual logic to fetch the body node slot
         // Additionally, events will be assigned to limit per update validation and to allow events to handle cache invalidation
-        private static string GetSlotAndAssignEvents(FindParentByTag instance, Slot targetSlot, string targetTag, int searchDepth)
+        private static Slot GetSlotAndAssignEvents(FindParentByTag instance, Slot targetSlot, string targetTag, int searchDepth)
         {
             if (targetSlot == null) return null!;
 
             Cache cache = CachedFindParentByTags[instance];
             Slot slot = targetSlot.FindParent(s => s.Tag == targetTag, searchDepth);
-            cache.CachedTag = slot.Tag;
+            cache.CachedSlot = slot;
 
             ICollection<Slot> slotCollection = [];
 
@@ -52,11 +52,11 @@ public partial class FluxCaching : ResoniteMod
                 }
             }
 
-            return slot.Tag;
+            return slot;
         }
 
         // Checks cached data for changes that cannot be assigned to events
-        private static string CheckForChanges(FindParentByTag instance, Slot targetSlot, string targetTag, int searchDepth)
+        private static Slot CheckForChanges(FindParentByTag instance, Slot targetSlot, string targetTag, int searchDepth)
         {
             Cache cache;
             bool shouldUpdate = false;
@@ -73,7 +73,7 @@ public partial class FluxCaching : ResoniteMod
                 cache = CachedFindParentByTags[instance];
             }
             
-            string tag = cache.CachedTag;
+            Slot slot = cache.CachedSlot;
             
             if (cache.CachedTargetSlot != targetSlot)
             {
@@ -95,7 +95,7 @@ public partial class FluxCaching : ResoniteMod
 
             if (shouldUpdate) return GetSlotAndAssignEvents(instance, targetSlot, targetTag, searchDepth);
 
-            return tag;
+            return slot;
         }
     }
 }
