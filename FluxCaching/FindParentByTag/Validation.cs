@@ -74,7 +74,7 @@ public partial class FluxCaching : ResoniteMod
             }
             
             Slot slot = cache.CachedSlot;
-            
+
             if (cache.CachedTargetSlot != targetSlot)
             {
                 cache.CachedTargetSlot = targetSlot;
@@ -93,7 +93,7 @@ public partial class FluxCaching : ResoniteMod
                 shouldUpdate = true;
             }
 
-            if (shouldUpdate) return GetSlotAndAssignEvents(instance, targetSlot, targetTag, searchDepth);
+            if (shouldUpdate || slot == null) return GetSlotAndAssignEvents(instance, targetSlot, targetTag, searchDepth);
 
             return slot;
         }

@@ -102,7 +102,7 @@ public partial class FluxCaching : ResoniteMod
                 shouldUpdate = true;
             }
 
-            if (shouldUpdate) return GetSlotAndAssignEvents(instance, targetSlot, targetTag, searchDepth);
+            if (shouldUpdate || slot == null) return GetSlotAndAssignEvents(instance, targetSlot, targetTag, searchDepth);
 
             return slot;
         }
