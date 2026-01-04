@@ -8,6 +8,8 @@ Many ProtoFlux nodes search through slot hierarchies and components on slots eve
 **DO NOT USE THIS MOD AS A CRUTCH FOR BAD PROGRAMMING PRACTICES.** This mod solves a symptom of a problem, not the problem itself.
 Said problem is the misuse of continuously updating ProtoFlux nodes, such that ProtoFlux is updating every engine update when they don't need to be. This does NOT mean that continuously updating ProtoFlux is bad, but you should be careful about what you're doing when you are using continuously updating ProtoFlux nodes.
 
+If you notice that the output of a node changes between the mod being enabled and disabled, that is considered a bug. Please open an issue about it.
+
 This mod tries to address concerns seen [in this discussion](<https://github.com/Yellow-Dog-Man/Resonite-Issues/discussions/3927>).
 
 ## Supported ProtoFlux Nodes 
