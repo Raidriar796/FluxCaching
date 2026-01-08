@@ -54,7 +54,7 @@ public partial class FluxCaching : ResoniteMod
                 {
                     tempSlot.ChildAdded += (s, ss) => { ClearCache(instance, targetSlot, targetTag, searchDepth); };
                     tempSlot.ChildRemoved += (s, ss) => { ClearCache(instance, targetSlot, targetTag, searchDepth); };
-                    tempSlot.tag.OnValueChange += (v) => { ClearCache(instance, targetSlot, targetTag, searchDepth); };
+                    tempSlot.Tag_Field.OnValueChange += (v) => { ClearCache(instance, targetSlot, targetTag, searchDepth); };
                     tempSlot.ParentChanged += (s) => { ClearCache(instance, targetSlot, targetTag, searchDepth); };
                     tempSlot.Destroyed += (s) => { ClearCache(instance, targetSlot, targetTag, searchDepth); };
                 }
